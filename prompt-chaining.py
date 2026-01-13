@@ -1,18 +1,18 @@
 import os
-from langchain_openai import ChatOpenAI
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
 
 from dotenv import load_dotenv
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
 
 load_dotenv()
 
 # 方式1：使用 ChatOpenAI 配置自定义 base_url
 model = ChatOpenAI(
-    model="deepseek-r1-0528",
+    model="deepseek/deepseek-v3.2-251201",
     base_url="https://api.qnaigc.com/v1",
     api_key=os.getenv("API_KEY"),  # 或者使用 os.getenv("API_KEY")
-    temperature=0
+    temperature=0,
 )
 
 # ‑‑‑ 提示1：信息提取‑‑‑
@@ -31,10 +31,7 @@ extraction_chain = prompt_extract | model | StrOutputParser()
 
 # 全链将提取链的输出作为'specifications' 变量传递给转换提示
 full_chain = (
-    {"specifications": extraction_chain}
-    | prompt_transform
-    | model
-    | StrOutputParser()
+    {"specifications": extraction_chain} | prompt_transform | model | StrOutputParser()
 )
 
 # ‑‑‑ 运行链‑‑‑

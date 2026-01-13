@@ -1,4 +1,9 @@
 langchain-openai>=0.1.0
 langchain-core>=0.1.0
 python-dotenv>=1.0.0
+google-adk>=1.22.0
 
+# Code formatting and linting tools
+black>=24.0.0
+isort>=5.13.0
+ruff>=0.1.0
